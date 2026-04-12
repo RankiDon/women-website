@@ -3,13 +3,13 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1 class="hero-title">Empowering Women,<br />Inspiring Change</h1>
+        <h1 class="hero-title">赋权女性<br />激发变革</h1>
         <p class="hero-subtitle">
-          Stories, perspectives, and voices that celebrate and advance the feminist movement.
+          用故事、视角和声音庆祝并推动女权运动的发展。
         </p>
         <div class="hero-cta">
-          <router-link to="/articles" class="btn-primary">Explore Articles</router-link>
-          <router-link to="/about" class="btn-secondary">Learn More</router-link>
+          <router-link to="/articles" class="btn-primary">浏览文章</router-link>
+          <router-link to="/about" class="btn-secondary">了解更多</router-link>
         </div>
       </div>
     </section>
@@ -18,8 +18,8 @@
     <section class="featured">
       <div class="section-container">
         <div class="section-header">
-          <h2 class="section-title">Latest Stories</h2>
-          <router-link to="/articles" class="section-link">View all</router-link>
+          <h2 class="section-title">最新文章</h2>
+          <router-link to="/articles" class="section-link">查看全部</router-link>
         </div>
 
         <div v-if="loading" class="loading">
@@ -35,7 +35,7 @@
         </div>
 
         <div v-else class="empty-state">
-          <p>No articles available yet. Check back soon!</p>
+          <p>暂无文章，敬请期待！</p>
         </div>
       </div>
     </section>
@@ -43,20 +43,19 @@
     <!-- Mission Section -->
     <section class="mission">
       <div class="mission-content">
-        <h2 class="mission-title">Our Mission</h2>
+        <h2 class="mission-title">我们的使命</h2>
         <p class="mission-text">
-          We believe in the power of storytelling to inspire change. Our platform amplifies
-          women's voices, explores intersectional feminism, and creates a space for
-          honest conversations about gender, equality, and social justice.
+          我们相信故事的力量可以激发变革。我们的平台放大女性的声音，
+          探索交叉女权主义，为关于性别、平等和社会正义的诚实对话创造空间。
         </p>
-        <router-link to="/about" class="btn-outline">About Us</router-link>
+        <router-link to="/about" class="btn-outline">关于我们</router-link>
       </div>
     </section>
 
     <!-- Categories Section -->
     <section class="categories">
       <div class="section-container">
-        <h2 class="section-title center">Explore by Category</h2>
+        <h2 class="section-title center">按分类浏览</h2>
         <div class="categories-grid">
           <router-link
             v-for="category in categories"
@@ -84,15 +83,15 @@ const loading = ref(true)
 const fetchData = async () => {
   try {
     const [articlesRes, categoriesRes] = await Promise.all([
-      getArticles(),
+      getArticles({ page: 0, size: 6 }),
       getCategories()
     ])
-    articles.value = articlesRes.data.slice(0, 6)
+    articles.value = articlesRes.data.articles.slice(0, 6)
     categories.value = categoriesRes.data
   } catch (error) {
     console.error('Failed to fetch data:', error)
     // Fallback categories if API fails
-    categories.value = ['Politics', 'Culture', 'Workplace', 'Health', 'Education', 'Activism']
+    categories.value = ['政治', '文化', '职场', '健康', '教育', '行动主义']
   } finally {
     loading.value = false
   }

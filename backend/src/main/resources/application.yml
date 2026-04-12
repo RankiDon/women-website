@@ -18,3 +18,10 @@ mybatis:
 logging:
   level:
     com.feminist.women: debug
+
+spring.mvc:
+  cors:
+    allowed-origins: "http://localhost:5173"
+    allowed-methods: "*"
+    allowed-headers: "*"
+    allow-credentials: true

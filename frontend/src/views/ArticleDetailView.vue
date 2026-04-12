@@ -7,8 +7,8 @@
 
     <!-- Error State -->
     <div v-else-if="error" class="error-state">
-      <h2>Article not found</h2>
-      <router-link to="/articles" class="btn-back">Back to Articles</router-link>
+      <h2>文章未找到</h2>
+      <router-link to="/articles" class="btn-back">返回文章列表</router-link>
     </div>
 
     <!-- Article Content -->
@@ -18,14 +18,14 @@
           <span class="article-category">{{ article.category }}</span>
           <h1 class="article-title">{{ article.title }}</h1>
           <div class="article-meta">
-            <span class="article-author">By {{ article.author }}</span>
+            <span class="article-author">作者：{{ article.author }}</span>
             <span class="article-date">{{ formattedDate }}</span>
           </div>
         </div>
       </header>
 
-      <div v-if="article.imageUrl" class="article-hero-image">
-        <img :src="article.imageUrl" :alt="article.title" />
+      <div v-if="article.coverImage" class="article-hero-image">
+        <img :src="article.coverImage" :alt="article.title" />
       </div>
 
       <div class="article-body">
@@ -33,11 +33,11 @@
 
         <aside class="article-sidebar">
           <div class="share-section">
-            <h4>Share this article</h4>
+            <h4>分享文章</h4>
             <div class="share-buttons">
               <button @click="shareTwitter" class="share-btn">Twitter</button>
               <button @click="shareFacebook" class="share-btn">Facebook</button>
-              <button @click="copyLink" class="share-btn">Copy Link</button>
+              <button @click="copyLink" class="share-btn">复制链接</button>
             </div>
           </div>
         </aside>
@@ -45,7 +45,7 @@
 
       <footer class="article-footer">
         <router-link to="/articles" class="btn-back">
-          <span>&larr;</span> Back to Articles
+          <span>&larr;</span> 返回文章列表
         </router-link>
       </footer>
     </article>
@@ -63,8 +63,8 @@ const loading = ref(true)
 const error = ref(false)
 
 const formattedDate = computed(() => {
-  if (!article.value.createTime) return ''
-  const date = new Date(article.value.createTime)
+  if (!article.value.createdAt) return ''
+  const date = new Date(article.value.createdAt)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -96,7 +96,7 @@ const fetchArticle = async () => {
       title: 'The Future of Feminism',
       category: 'Politics',
       author: 'Sarah Chen',
-      createTime: '2026-04-10',
+      createdAt: '2026-04-10',
       content: `The feminist movement has always evolved to meet the challenges of its time. From the suffragettes fighting for the right to vote to the modern intersectional movement, each generation has built upon the foundations laid by those who came before.
 
 Today, we stand at a pivotal moment. The fight for gender equality has expanded to encompass a broader understanding of identity, experience, and systemic oppression. We recognize that feminism cannot be monolithic—it must be inclusive, acknowledging the ways race, class, sexuality, and ability intersect with gender.
@@ -106,7 +106,7 @@ Technology has transformed how we organize and advocate. Social media has given 
 Yet challenges remain. Pay equity, reproductive rights, representation in leadership, and ending violence against women are all battles still being fought. The future of feminism depends on our ability to build coalitions, center the most vulnerable, and remain vigilant in the face of backlash.
 
 This is not just a women's issue—it is a human issue. When we lift women up, we lift entire communities. The future is feminist, and that future is being written by all of us.`,
-      imageUrl: null
+      coverImage: null
     }
   } finally {
     loading.value = false
@@ -127,7 +127,7 @@ const shareFacebook = () => {
 const copyLink = async () => {
   try {
     await navigator.clipboard.writeText(window.location.href)
-    alert('Link copied to clipboard!')
+    alert('链接已复制到剪贴板！')
   } catch (err) {
     console.error('Failed to copy:', err)
   }

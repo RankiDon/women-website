@@ -3,8 +3,8 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1>About Feminism</h1>
-        <p>Understanding the movement, its history, and why it matters today.</p>
+        <h1>关于女权主义</h1>
+        <p>理解这场运动，它的历史，以及为什么它在今天如此重要。</p>
       </div>
     </section>
 
@@ -13,18 +13,15 @@
       <div class="section-container">
         <div class="mission-grid">
           <div class="mission-text">
-            <h2>Our Mission</h2>
+            <h2>我们的使命</h2>
             <p>
-              We believe that gender equality is not just a women's issue—it's a
-              human issue. Our platform exists to educate, inspire, and empower
-              people of all genders to join the fight for a more just world.
+              我们相信性别平等不仅是女性的问题，而是人类的问题。我们的平台旨在教育、启发和赋权
+              所有性别的人加入为更公正的世界而奋斗的行列。
             </p>
             <p>
-              Through thoughtful articles, personal stories, and analysis of
-              current events, we aim to make feminist ideas accessible to
-              everyone. We embrace intersectionality, recognizing that the
-              struggle for equality must account for the ways race, class,
-              sexuality, and ability intersect with gender.
+              通过深思熟虑的文章、个人故事和对时事的分析，我们旨在让女权主义思想触手可及。
+              我们拥抱交叉性，认识到争取平等的斗争必须考虑到种族、阶级、
+              性取向和能力如何与性别交叉重叠。
             </p>
           </div>
           <div class="mission-visual">
@@ -37,15 +34,13 @@
     <!-- What is Feminism -->
     <section class="definition">
       <div class="section-container">
-        <h2>What is Feminism?</h2>
+        <h2>什么是女权主义？</h2>
         <blockquote>
-          "Feminism is the belief in the social, economic, and political equality
-          of the sexes."
+          "女权主义是对社会、经济和政治平等的信念。"
         </blockquote>
         <p>
-          At its core, feminism is simple: it's the belief that women deserve the
-          same rights and opportunities as men. But the application of that belief
-          has evolved over more than two centuries of activism and scholarship.
+          从本质上讲，女权主义很简单：它认为女性应该享有与男性相同权利和机会。
+          但这一信念的应用已经经历了两个多世纪的活动和学术发展。
         </p>
       </div>
     </section>
@@ -53,36 +48,34 @@
     <!-- Wave Timeline -->
     <section class="timeline">
       <div class="section-container">
-        <h2>The Movement Through Time</h2>
+        <h2>运动的历史进程</h2>
         <div class="waves">
           <div class="wave">
-            <h3>First Wave (1848-1920)</h3>
+            <h3>第一波 (1848-1920)</h3>
             <p>
-              Focused on legal issues, particularly the right to vote. The Seneca
-              Falls Convention in 1848 marked the beginning of the organized women's
-              rights movement in America.
+              专注于法律问题，特别是投票权。1848年的塞内卡福尔斯会议标志着
+              美国有组织的妇女权利运动的开始。
             </p>
           </div>
           <div class="wave">
-            <h3>Second Wave (1960s-1980s)</h3>
+            <h3>第二波 (1960s-1980s)</h3>
             <p>
-              Expanded the fight to workplace equality, reproductive rights, and
-              domestic violence awareness. Introduced the concept of gender as a
-              social construct.
+              将斗争扩展到工作场所平等、生殖权利和家庭暴力意识。
+              引入了性别作为社会建构的概念。
             </p>
           </div>
           <div class="wave">
-            <h3>Third Wave (1990s-2000s)</h3>
+            <h3>第三波 (1990s-2000s)</h3>
             <p>
-              Embraced diversity and individual agency. Focused on intersectionality,
-              body autonomy, and challenging narrow definitions of femininity.
+              拥抱多样性和个人能动性。专注于交叉性、
+              身体自主性以及挑战对女性气质的狭隘定义。
             </p>
           </div>
           <div class="wave">
-            <h3>Fourth Wave (2010s-Present)</h3>
+            <h3>第四波 (2010s至今)</h3>
             <p>
-              Amplified by social media, focusing on sexual harassment, consent
-              culture, and online activism. Global and more inclusive than ever before.
+              以社交媒体为放大器，专注于性骚扰、同意文化和在线行动主义。
+              比以往任何时候都更加全球化和包容。
             </p>
           </div>
         </div>
@@ -92,37 +85,35 @@
     <!-- Core Principles -->
     <section class="principles">
       <div class="section-container">
-        <h2>Core Principles</h2>
+        <h2>核心原则</h2>
         <div class="principles-grid">
           <div class="principle">
             <div class="principle-icon">01</div>
-            <h3>Equality</h3>
+            <h3>平等</h3>
             <p>
-              All people deserve equal rights and opportunities, regardless of gender.
+              所有人，无论性别，都应享有平等的权利和机会。
             </p>
           </div>
           <div class="principle">
             <div class="principle-icon">02</div>
-            <h3>Intersectionality</h3>
+            <h3>交叉性</h3>
             <p>
-              Recognizing that gender intersects with race, class, sexuality, and
-              other forms of identity and oppression.
+              认识到性别与种族、阶级、性取向以及
+              其他形式的身份认同和压迫相互交叉重叠。
             </p>
           </div>
           <div class="principle">
             <div class="principle-icon">03</div>
-            <h3>Body Autonomy</h3>
+            <h3>身体自主</h3>
             <p>
-              Every person has the right to control their own body, including
-              reproductive choices.
+              每个人都有权控制自己的身体，包括生殖选择。
             </p>
           </div>
           <div class="principle">
             <div class="principle-icon">04</div>
-            <h3>Safety</h3>
+            <h3>安全</h3>
             <p>
-              Everyone deserves to live free from violence, harassment, and
-              discrimination.
+              每个人都应该生活在免受暴力、骚扰和歧视的环境中。
             </p>
           </div>
         </div>
@@ -132,9 +123,9 @@
     <!-- CTA -->
     <section class="cta">
       <div class="cta-content">
-        <h2>Join the Conversation</h2>
-        <p>Read our articles and become part of the movement.</p>
-        <router-link to="/articles" class="btn-primary">Explore Articles</router-link>
+        <h2>加入对话</h2>
+        <p>阅读我们的文章，成为这场运动的一部分。</p>
+        <router-link to="/articles" class="btn-primary">浏览文章</router-link>
       </div>
     </section>
   </div>

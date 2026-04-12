@@ -1,7 +1,7 @@
 <template>
   <article class="article-card" @click="navigateToArticle">
-    <div class="card-image" v-if="article.imageUrl">
-      <img :src="article.imageUrl" :alt="article.title" />
+    <div class="card-image" v-if="article.coverImage">
+      <img :src="article.coverImage" :alt="article.title" />
     </div>
     <div class="card-image placeholder" v-else>
       <div class="placeholder-icon">
@@ -42,8 +42,8 @@ const truncatedExcerpt = computed(() => {
 })
 
 const formattedDate = computed(() => {
-  if (!props.article.createTime) return ''
-  const date = new Date(props.article.createTime)
+  if (!props.article.createdAt) return ''
+  const date = new Date(props.article.createdAt)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',

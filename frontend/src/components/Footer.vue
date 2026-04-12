@@ -3,21 +3,21 @@
     <div class="footer-container">
       <div class="footer-content">
         <div class="footer-section">
-          <h4>Women</h4>
-          <p>Empowering voices, inspiring change.</p>
+          <h4>女性之声</h4>
+          <p>赋权女性，激发变革。</p>
         </div>
 
         <div class="footer-section">
-          <h4>Explore</h4>
+          <h4>探索</h4>
           <ul>
-            <li><router-link to="/articles">Articles</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
-            <li><router-link to="/contact">Contact</router-link></li>
+            <li><router-link to="/articles">文章</router-link></li>
+            <li><router-link to="/about">关于我们</router-link></li>
+            <li><router-link to="/contact">联系我们</router-link></li>
           </ul>
         </div>
 
         <div class="footer-section">
-          <h4>Connect</h4>
+          <h4>关注我们</h4>
           <div class="social-links">
             <a href="#" aria-label="Twitter">Twitter</a>
             <a href="#" aria-label="Instagram">Instagram</a>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2026 Women. All rights reserved.</p>
+        <p>&copy; 2026 女性之声. 保留所有权利。</p>
       </div>
     </div>
   </footer>

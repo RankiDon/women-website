@@ -12,9 +12,9 @@
       </button>
 
       <ul class="navbar-menu" :class="{ active: isMenuOpen }">
-        <li><router-link to="/articles" @click="closeMenu">Articles</router-link></li>
-        <li><router-link to="/about" @click="closeMenu">About</router-link></li>
-        <li><router-link to="/contact" @click="closeMenu">Contact</router-link></li>
+        <li><router-link to="/articles" @click="closeMenu">文章</router-link></li>
+        <li><router-link to="/about" @click="closeMenu">关于我们</router-link></li>
+        <li><router-link to="/contact" @click="closeMenu">联系我们</router-link></li>
       </ul>
     </div>
   </nav>

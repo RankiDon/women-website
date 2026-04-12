@@ -2,8 +2,8 @@
   <div class="articles-view">
     <section class="page-header">
       <div class="header-content">
-        <h1>Articles</h1>
-        <p>Stories that inform, inspire, and ignite change.</p>
+        <h1>文章</h1>
+        <p>用故事启发、激励并点燃变革。</p>
       </div>
     </section>
 
@@ -12,7 +12,7 @@
         <!-- Category Filter -->
         <div class="category-filter">
           <button
-            v-for="cat in ['All', ...categories]"
+            v-for="cat in ['全部', ...categories]"
             :key="cat"
             :class="['filter-btn', { active: selectedCategory === cat }]"
             @click="selectCategory(cat)"
@@ -37,13 +37,13 @@
 
         <!-- Empty State -->
         <div v-else class="empty-state">
-          <p>No articles found in this category.</p>
-          <button @click="selectCategory('All')" class="btn-reset">View all articles</button>
+          <p>该分类下暂无文章。</p>
+          <button @click="selectCategory('全部')" class="btn-reset">查看全部文章</button>
         </div>
 
         <!-- Load More -->
         <div v-if="hasMore && !loading" class="load-more">
-          <button @click="loadMore" class="btn-load-more">Load More</button>
+          <button @click="loadMore" class="btn-load-more">加载更多</button>
         </div>
       </div>
     </section>
@@ -61,14 +61,14 @@ const router = useRouter()
 
 const articles = ref([])
 const categories = ref([])
-const selectedCategory = ref('All')
+const selectedCategory = ref('全部')
 const loading = ref(true)
 const currentPage = ref(1)
 const pageSize = 9
 const hasMore = ref(false)
 
 const filteredArticles = computed(() => {
-  if (selectedCategory.value === 'All') {
+  if (selectedCategory.value === '全部') {
     return articles.value
   }
   return articles.value.filter(
@@ -80,7 +80,7 @@ const fetchArticles = async () => {
   try {
     loading.value = true
     const response = await getArticles({ page: currentPage.value, size: pageSize })
-    const newArticles = response.data
+    const newArticles = response.data.articles
 
     if (currentPage.value === 1) {
       articles.value = newArticles
@@ -98,12 +98,12 @@ const fetchArticles = async () => {
     // Fallback mock data
     if (currentPage.value === 1) {
       articles.value = [
-        { id: 1, title: 'The Future of Feminism', category: 'Politics', content: 'Exploring the evolving landscape of feminist thought...', author: 'Sarah Chen', createTime: '2026-04-10' },
-        { id: 2, title: 'Women in Tech', category: 'Workplace', content: 'Breaking barriers in the technology industry...', author: 'Maria Garcia', createTime: '2026-04-08' },
-        { id: 3, title: 'Reproductive Rights', category: 'Health', content: 'Understanding the ongoing fight for bodily autonomy...', author: 'Dr. Emily Brown', createTime: '2026-04-05' },
-        { id: 4, title: 'Intersectionality 101', category: 'Education', content: 'A beginner guide to intersectional feminism...', author: 'James Wilson', createTime: '2026-04-01' },
+        { id: 1, title: 'The Future of Feminism', category: 'Politics', content: 'Exploring the evolving landscape of feminist thought...', author: 'Sarah Chen', createdAt: '2026-04-10' },
+        { id: 2, title: 'Women in Tech', category: 'Workplace', content: 'Breaking barriers in the technology industry...', author: 'Maria Garcia', createdAt: '2026-04-08' },
+        { id: 3, title: 'Reproductive Rights', category: 'Health', content: 'Understanding the ongoing fight for bodily autonomy...', author: 'Dr. Emily Brown', createdAt: '2026-04-05' },
+        { id: 4, title: 'Intersectionality 101', category: 'Education', content: 'A beginner guide to intersectional feminism...', author: 'James Wilson', createdAt: '2026-04-01' },
       ]
-      categories.value = ['Politics', 'Workplace', 'Health', 'Education']
+      categories.value = ['政治', '职场', '健康', '教育']
     }
   } finally {
     loading.value = false
@@ -114,7 +114,7 @@ const selectCategory = (category) => {
   selectedCategory.value = category
   currentPage.value = 1
 
-  if (category === 'All') {
+  if (category === '全部') {
     router.push({ path: '/articles' })
   } else {
     router.push({ path: '/articles', query: { category } })
@@ -130,7 +130,7 @@ const loadMore = () => {
 watch(
   () => route.query.category,
   (newCategory) => {
-    selectedCategory.value = newCategory || 'All'
+    selectedCategory.value = newCategory || '全部'
     currentPage.value = 1
     articles.value = []
     fetchArticles()
