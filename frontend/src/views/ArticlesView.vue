@@ -63,7 +63,7 @@ const articles = ref([])
 const categories = ref([])
 const selectedCategory = ref('全部')
 const loading = ref(true)
-const currentPage = ref(1)
+const currentPage = ref(0)
 const pageSize = 9
 const hasMore = ref(false)
 
@@ -90,9 +90,9 @@ const fetchArticles = async () => {
 
     hasMore.value = newArticles.length === pageSize
 
-    // Extract unique categories
-    const uniqueCategories = [...new Set(newArticles.map(a => a.category).filter(Boolean))]
-    categories.value = [...new Set([...categories.value, ...uniqueCategories])]
+    // Extract unique categories - use English names directly
+    const cats = [...new Set(newArticles.map(a => a.category).filter(Boolean))]
+    categories.value = cats
   } catch (error) {
     console.error('Failed to fetch articles:', error)
     // Fallback mock data
@@ -110,9 +110,15 @@ const fetchArticles = async () => {
   }
 }
 
+const loadMore = () => {
+  currentPage.value++
+  fetchArticles()
+}
+
 const selectCategory = (category) => {
   selectedCategory.value = category
-  currentPage.value = 1
+  currentPage.value = 0
+  articles.value = []
 
   if (category === '全部') {
     router.push({ path: '/articles' })
@@ -121,18 +127,14 @@ const selectCategory = (category) => {
   }
 }
 
-const loadMore = () => {
-  currentPage.value++
-  fetchArticles()
-}
-
 // Watch for route query changes
 watch(
   () => route.query.category,
   (newCategory) => {
     selectedCategory.value = newCategory || '全部'
-    currentPage.value = 1
+    currentPage.value = 0
     articles.value = []
+    categories.value = []
     fetchArticles()
   }
 )

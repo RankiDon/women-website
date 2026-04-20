@@ -1,391 +1,207 @@
 <template>
-  <div class="home">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="hero-title">赋权女性<br />激发变革</h1>
-        <p class="hero-subtitle">
-          用故事、视角和声音庆祝并推动女权运动的发展。
-        </p>
-        <div class="hero-cta">
-          <router-link to="/articles" class="btn-primary">浏览文章</router-link>
-          <router-link to="/about" class="btn-secondary">了解更多</router-link>
-        </div>
-      </div>
-    </section>
+  <div class="flower-field-page">
+    <!-- Header overlay -->
+    <header class="field-header">
+      <div class="logo">Women</div>
+      <nav class="nav-links">
+        <router-link to="/articles">花田</router-link>
+        <router-link to="/about">关于</router-link>
+        <router-link to="/contact">联系</router-link>
+      </nav>
+    </header>
 
-    <!-- Featured Articles -->
-    <section class="featured">
-      <div class="section-container">
-        <div class="section-header">
-          <h2 class="section-title">最新文章</h2>
-          <router-link to="/articles" class="section-link">查看全部</router-link>
-        </div>
+    <!-- Title overlay -->
+    <div class="field-title">
+      <h1>花田</h1>
+      <p>每一朵花都是一个故事</p>
+    </div>
 
-        <div v-if="loading" class="loading">
-          <div class="loading-spinner"></div>
-        </div>
+    <!-- Three.js Flower Field -->
+    <ThreeFlowerField v-if="articles.length > 0" :articles="articles" />
 
-        <div v-else-if="articles.length > 0" class="featured-grid">
-          <ArticleCard
-            v-for="article in articles"
-            :key="article.id"
-            :article="article"
-          />
-        </div>
-
-        <div v-else class="empty-state">
-          <p>暂无文章，敬请期待！</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Mission Section -->
-    <section class="mission">
-      <div class="mission-content">
-        <h2 class="mission-title">我们的使命</h2>
-        <p class="mission-text">
-          我们相信故事的力量可以激发变革。我们的平台放大女性的声音，
-          探索交叉女权主义，为关于性别、平等和社会正义的诚实对话创造空间。
-        </p>
-        <router-link to="/about" class="btn-outline">关于我们</router-link>
-      </div>
-    </section>
-
-    <!-- Categories Section -->
-    <section class="categories">
-      <div class="section-container">
-        <h2 class="section-title center">按分类浏览</h2>
-        <div class="categories-grid">
-          <router-link
-            v-for="category in categories"
-            :key="category"
-            :to="`/articles?category=${category}`"
-            class="category-card"
-          >
-            <span>{{ category }}</span>
-          </router-link>
-        </div>
-      </div>
-    </section>
+    <!-- Loading state -->
+    <div v-if="loading" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>花田生成中...</p>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getArticles, getCategories } from '../api'
-import ArticleCard from '../components/ArticleCard.vue'
+import { getArticles } from '../api'
+import ThreeFlowerField from '../components/ThreeFlowerField.vue'
 
 const articles = ref([])
-const categories = ref([])
 const loading = ref(true)
 
-const fetchData = async () => {
+const fetchArticles = async () => {
   try {
-    const [articlesRes, categoriesRes] = await Promise.all([
-      getArticles({ page: 0, size: 6 }),
-      getCategories()
-    ])
-    articles.value = articlesRes.data.articles.slice(0, 6)
-    categories.value = categoriesRes.data
+    loading.value = true
+    const response = await getArticles({ page: 0, size: 50 })
+    articles.value = response.data.articles
   } catch (error) {
-    console.error('Failed to fetch data:', error)
-    // Fallback categories if API fails
-    categories.value = ['政治', '文化', '职场', '健康', '教育', '行动主义']
+    console.error('Failed to fetch articles:', error)
   } finally {
     loading.value = false
   }
 }
 
 onMounted(() => {
-  fetchData()
+  fetchArticles()
 })
 </script>
 
 <style scoped>
-.home {
-  padding-top: 48px;
-}
-
-/* Hero Section */
-.hero {
+.flower-field-page {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 120px 24px 80px;
-  background: linear-gradient(180deg, #f5f5f7 0%, #ffffff 100%);
+  position: relative;
+  background: #1a1a2e;
 }
 
-.hero-content {
-  max-width: 800px;
-  animation: fadeInUp 1s ease-out;
-}
-
-.hero-title {
-  font-size: clamp(48px, 10vw, 80px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--color-black);
-  margin: 0 0 24px;
-}
-
-.hero-subtitle {
-  font-size: clamp(18px, 3vw, 24px);
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--color-gray);
-  margin: 0 0 48px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-cta {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn-primary,
-.btn-secondary,
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 32px;
-  font-size: 17px;
-  font-weight: 500;
-  text-decoration: none;
-  border-radius: 980px;
-  transition: all 0.3s ease;
-}
-
-.btn-primary {
-  background: var(--color-black);
-  color: var(--color-white);
-}
-
-.btn-primary:hover {
-  background: #1d1d1f;
-  transform: scale(1.02);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--color-black);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.btn-secondary:hover {
-  border-color: var(--color-black);
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--color-black);
-  border: 1px solid var(--color-black);
-}
-
-.btn-outline:hover {
-  background: var(--color-black);
-  color: var(--color-white);
-}
-
-/* Featured Section */
-.featured {
-  padding: 100px 48px;
-}
-
-.section-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.section-header {
+/* Header */
+.field-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 60px;
+  padding: 16px 32px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  z-index: 1000;
 }
 
-.section-title {
-  font-size: 40px;
-  font-weight: 600;
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
   letter-spacing: -0.02em;
-  color: var(--color-black);
-  margin: 0;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
 }
 
-.section-title.center {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-link {
-  font-size: 17px;
-  color: var(--color-blue);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.section-link:hover {
-  text-decoration: underline;
-}
-
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-}
-
-.loading {
+.nav-links {
   display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.nav-links a:first-child {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+/* Title */
+.field-title {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.field-title h1 {
+  font-size: clamp(48px, 12vw, 100px);
+  font-weight: 700;
+  color: white;
+  text-shadow:
+    0 0 40px rgba(255,255,255,0.8),
+    0 0 80px rgba(255,200,255,0.5),
+    0 0 120px rgba(200,150,255,0.3);
+  margin: 0;
+  letter-spacing: 0.15em;
+  animation: glow 3s ease-in-out infinite;
+}
+
+.field-title p {
+  font-size: clamp(16px, 3vw, 24px);
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+  margin-top: 12px;
+  letter-spacing: 0.2em;
+}
+
+@keyframes glow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+/* Loading */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 26, 46, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: 60px 0;
+  z-index: 2000;
 }
 
 .loading-spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid #f5f5f7;
-  border-top-color: var(--color-black);
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  margin-bottom: 20px;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 60px 0;
-  color: var(--color-gray);
-  font-size: 17px;
-}
-
-/* Mission Section */
-.mission {
-  padding: 120px 48px;
-  background: var(--color-black);
-  text-align: center;
-}
-
-.mission-content {
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.mission-title {
-  font-size: 48px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--color-white);
-  margin: 0 0 24px;
-}
-
-.mission-text {
-  font-size: 19px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 40px;
-}
-
-/* Categories Section */
-.categories {
-  padding: 100px 48px;
-}
-
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.category-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 24px;
-  background: #f5f5f7;
-  border-radius: 16px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.category-card:hover {
-  background: #e8e8ed;
-  transform: scale(1.02);
-}
-
-.category-card span {
-  font-size: 21px;
-  font-weight: 600;
-  color: var(--color-black);
-  letter-spacing: -0.02em;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.loading-overlay p {
+  color: white;
+  font-size: 18px;
+  letter-spacing: 0.1em;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .featured-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 768px) {
-  .hero {
-    padding: 100px 24px 60px;
+  .field-header {
+    padding: 12px 16px;
   }
 
-  .featured {
-    padding: 60px 24px;
+  .logo {
+    font-size: 18px;
   }
 
-  .section-header {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
+  .nav-links {
+    gap: 8px;
   }
 
-  .featured-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
+  .nav-links a {
+    padding: 6px 10px;
+    font-size: 11px;
   }
 
-  .categories {
-    padding: 60px 24px;
-  }
-
-  .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .mission {
-    padding: 80px 24px;
-  }
-
-  .mission-title {
-    font-size: 36px;
+  .field-title {
+    top: 60px;
   }
 }
 </style>

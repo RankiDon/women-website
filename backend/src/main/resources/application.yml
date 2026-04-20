@@ -1,5 +1,6 @@
 server:
   port: 8080
+  address: 0.0.0.0
 
 spring:
   datasource:
@@ -7,6 +8,12 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-init-sql: SET NAMES utf8mb4
+      data-source-properties:
+        characterEncoding: UTF-8
+        characterSetResults: UTF-8
+        connectionCollation: utf8mb4_unicode_ci
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -21,7 +28,7 @@ logging:
 
 spring.mvc:
   cors:
-    allowed-origins: "http://localhost:5173"
+    allowed-origins: "*"
     allowed-methods: "*"
     allowed-headers: "*"
     allow-credentials: true
