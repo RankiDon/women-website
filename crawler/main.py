@@ -25,6 +25,7 @@ from crawler.scrapers import (
     WHOScraper,
     UNDPscraper,
     WikipediaScraper,
+    ChineseWikipediaScraper,
 )
 from crawler.storage import APIClient, DatabaseStorage
 from crawler.config.settings import API_BASE_URL
@@ -41,6 +42,7 @@ SCRAPERS = {
     'who': WHOScraper,
     'undp': UNDPscraper,
     'wikipedia': WikipediaScraper,
+    'zh_wikipedia': ChineseWikipediaScraper,
 }
 
 
