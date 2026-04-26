@@ -46,7 +46,7 @@ SCRAPERS = {
 }
 
 
-def run_scraper(scraper_name: str, limit: int, dry_run: bool):
+def run_scraper(scraper_name: str, limit: int, dry_run: bool, api_url: str = None):
     """Run a specific scraper."""
     if scraper_name not in SCRAPERS:
         logger.error(f"Unknown scraper: {scraper_name}")
@@ -75,7 +75,6 @@ def run_scraper(scraper_name: str, limit: int, dry_run: bool):
             return
 
         # Try API first
-        api_url = API_BASE_URL
         if api_url:
             client = APIClient(api_url)
             saved, skipped = client.save_articles(articles)
@@ -129,17 +128,15 @@ def main():
             print(f"  - {name}")
         return
 
-    if args.api_url:
-        import crawler.config.settings as settings
-        settings.API_BASE_URL = args.api_url
+    api_url = args.api_url or API_BASE_URL
 
     if args.source:
-        run_scraper(args.source, args.limit, args.dry_run)
+        run_scraper(args.source, args.limit, args.dry_run, api_url)
     else:
         # Run all scrapers
         for scraper_name in SCRAPERS.keys():
             logger.info(f"\n{'='*50}")
-            run_scraper(scraper_name, args.limit, args.dry_run)
+            run_scraper(scraper_name, args.limit, args.dry_run, api_url)
 
 
 if __name__ == '__main__':
