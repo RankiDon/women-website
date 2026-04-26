@@ -76,35 +76,35 @@ const filteredArticles = computed(() => {
   )
 })
 
+const fetchAllCategories = async () => {
+  try {
+    const response = await getArticles({ page: 0, size: 1000 })
+    const cats = [...new Set(response.data.articles.map(a => a.category).filter(Boolean))]
+    categories.value = cats
+  } catch (e) {
+    console.error('Failed to fetch categories:', e)
+  }
+}
+
 const fetchArticles = async () => {
   try {
     loading.value = true
-    const response = await getArticles({ page: currentPage.value, size: pageSize })
+    const params = { page: currentPage.value, size: pageSize }
+    if (selectedCategory.value !== '全部') {
+      params.category = selectedCategory.value
+    }
+    const response = await getArticles(params)
     const newArticles = response.data.articles
 
-    if (currentPage.value === 1) {
+    if (currentPage.value === 0) {
       articles.value = newArticles
     } else {
       articles.value = [...articles.value, ...newArticles]
     }
 
     hasMore.value = newArticles.length === pageSize
-
-    // Extract unique categories - use English names directly
-    const cats = [...new Set(newArticles.map(a => a.category).filter(Boolean))]
-    categories.value = cats
   } catch (error) {
     console.error('Failed to fetch articles:', error)
-    // Fallback mock data
-    if (currentPage.value === 1) {
-      articles.value = [
-        { id: 1, title: 'The Future of Feminism', category: 'Politics', content: 'Exploring the evolving landscape of feminist thought...', author: 'Sarah Chen', createdAt: '2026-04-10' },
-        { id: 2, title: 'Women in Tech', category: 'Workplace', content: 'Breaking barriers in the technology industry...', author: 'Maria Garcia', createdAt: '2026-04-08' },
-        { id: 3, title: 'Reproductive Rights', category: 'Health', content: 'Understanding the ongoing fight for bodily autonomy...', author: 'Dr. Emily Brown', createdAt: '2026-04-05' },
-        { id: 4, title: 'Intersectionality 101', category: 'Education', content: 'A beginner guide to intersectional feminism...', author: 'James Wilson', createdAt: '2026-04-01' },
-      ]
-      categories.value = ['政治', '职场', '健康', '教育']
-    }
   } finally {
     loading.value = false
   }
@@ -134,7 +134,6 @@ watch(
     selectedCategory.value = newCategory || '全部'
     currentPage.value = 0
     articles.value = []
-    categories.value = []
     fetchArticles()
   }
 )
@@ -144,6 +143,7 @@ onMounted(() => {
   if (categoryFromUrl) {
     selectedCategory.value = categoryFromUrl
   }
+  fetchAllCategories()
   fetchArticles()
 })
 </script>
