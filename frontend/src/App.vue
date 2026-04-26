@@ -23,5 +23,6 @@ import Footer from './components/Footer.vue'
 
 main {
   flex: 1;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 </style>

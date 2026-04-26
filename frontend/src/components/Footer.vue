@@ -37,7 +37,7 @@
 .footer {
   background: var(--color-black);
   color: var(--color-white);
-  padding: 80px 48px 40px;
+  padding: 80px 48px calc(40px + env(safe-area-inset-bottom, 0px));
 }
 
 .footer-container {
